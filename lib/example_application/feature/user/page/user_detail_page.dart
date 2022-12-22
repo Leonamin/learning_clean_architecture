@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:learning_clean_architecture/example_application/core/data/datasource/user_remote_datasource.dart';
-import 'package:learning_clean_architecture/example_application/core/data/repository/user_repository_impl.dart';
-import 'package:learning_clean_architecture/example_application/core/domain/usecase/get_user_detail_usecase.dart';
 import 'package:learning_clean_architecture/example_application/feature/user/provider/user_detail_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -33,10 +30,7 @@ class UserDetailsPage extends StatelessWidget {
   Widget _buildUserInformationWidget() {
     return ChangeNotifierProvider(
       create: (context) {
-        final provider = UserDetailProvider(
-            useCase: GetUserDetailsUseCase(
-                repository: UserRepositoryImpl(
-                    userRemoteDataSource: UserRemoteDataSource())));
+        final provider = UserDetailProvider();
         provider.init();
         return provider;
       },

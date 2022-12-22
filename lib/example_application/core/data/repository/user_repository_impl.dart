@@ -1,20 +1,23 @@
+import 'package:dartz/dartz.dart';
 import 'package:learning_clean_architecture/example_application/core/data/datasource/user_remote_datasource.dart';
 import 'package:learning_clean_architecture/example_application/core/data/dto/user/user_dto.dart';
 import 'package:learning_clean_architecture/example_application/core/data/mapper/user_mapper.dart';
+import 'package:learning_clean_architecture/example_application/core/domain/entity/failure.dart';
 import 'package:learning_clean_architecture/example_application/core/domain/entity/user_entity.dart';
 import 'package:learning_clean_architecture/example_application/core/domain/repository/user_repository.dart';
 
 class UserRepositoryImpl extends UserRepository {
-  late UserRemoteDataSource _remoteDataSource;
+  // late UserRemoteDataSource _remoteDataSource;
+  final UserRemoteDataSource _remoteDataSource = UserRemoteDataSource();
 
-  UserRepositoryImpl({
-    required UserRemoteDataSource userRemoteDataSource,
-  }) {
-    _remoteDataSource = userRemoteDataSource;
-  }
+  // UserRepositoryImpl({
+  //   required UserRemoteDataSource userRemoteDataSource,
+  // }) {
+  //   _remoteDataSource = userRemoteDataSource;
+  // }
 
   @override
-  Future<UserEntity> getUserDetails({
+  Future<Either<Failure, UserEntity>> getUserDetails({
     required String userId,
   }) async {
     try {
@@ -24,7 +27,7 @@ class UserRepositoryImpl extends UserRepository {
       UserMapper mapper = UserMapper();
       UserEntity result = mapper.map(userDto);
 
-      return result;
+      return Right(result);
     } on Exception catch (e) {
       rethrow;
     }
